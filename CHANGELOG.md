@@ -2,15 +2,13 @@
 
 All notable changes in this version will be documented in this file. Go to [GitHub Releases](https://github.com/MeridianGH/kalliope-server/releases) to check all changes over previous versions.\
 See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
-## [2.5.0](https://github.com/MeridianGH/kalliope-server/compare/2.4.1...2.5.0) (2025-02-20)
+## <small>2.5.1 (2026-10-20)</small>
 
-
-### Features
-
-* add loading server icons ([b73b77c](https://github.com/MeridianGH/kalliope-server/commit/b73b77cc41abea0f131fec5f2d86fd3804b0623f))
-
-
-### Bug Fixes
-
-* toast container overlap ([a447953](https://github.com/MeridianGH/kalliope-server/commit/a447953666e007d09852e44e2cf28ea2332ce3e7))
-* toast positions and duplicated errors ([f058923](https://github.com/MeridianGH/kalliope-server/commit/f058923a80e751bdcc7871a69f6bcef2a06df351))
+* build: add Docker deployment setup ([33b4d5c](https://github.com/MeridianGH/kalliope-server/commit/33b4d5c))
+* build: fix container name ([eea33a2](https://github.com/MeridianGH/kalliope-server/commit/eea33a2))
+* fix: place toasts above navbar ([83598f5](https://github.com/MeridianGH/kalliope-server/commit/83598f5))
+* fix: read client_id from env in OAuth url ([e78bbd2](https://github.com/MeridianGH/kalliope-server/commit/e78bbd2))
+* fix: resolve react-hooks v7 errors ([253940d](https://github.com/MeridianGH/kalliope-server/commit/253940d))
+* chore: add docker-compose.example.yml to .gitignore ([74e3cfe](https://github.com/MeridianGH/kalliope-server/commit/74e3cfe))
+* ci: rebuild workflows for Vite and Docker ([f663607](https://github.com/MeridianGH/kalliope-server/commit/f663607))
+* refactor: migrate build from webpack to vite ([82feec2](https://github.com/MeridianGH/kalliope-server/commit/82feec2))
