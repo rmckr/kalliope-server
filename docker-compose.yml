@@ -1,5 +1,5 @@
 services:
-  kalliope:
+  kalliope-server:
     build: .
     container_name: kalliope-server
     restart: unless-stopped
