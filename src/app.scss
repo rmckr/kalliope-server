@@ -25,7 +25,7 @@
         position: fixed;
         margin: 0;
         padding: 0;
-        z-index: 999;
+        z-index: 1000; // above navbar (999)
     }
     .Toastify__toast {
         font-size: 1rem;
