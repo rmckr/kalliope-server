@@ -76,7 +76,8 @@ const redirectWithError = (res: Response, error: string) => {
   res.redirect(`/?error=${encodeURIComponent(error)}`)
 }
 app.get('/login', (req: Request, res: Response) => {
-  const loginUrl = new URL('https://discordapp.com/api/oauth2/authorize?client_id=1053262351803093032&scope=identify%20guilds&response_type=code')
+  const loginUrl = new URL('https://discordapp.com/api/oauth2/authorize?scope=identify%20guilds&response_type=code')
+  loginUrl.searchParams.set('client_id', process.env.CLIENT_ID ?? '1053262351803093032')
   loginUrl.searchParams.set('redirect_uri', `${origin}/auth`)
   const state = generateRandomString()
   loginUrl.searchParams.set('state', state)
