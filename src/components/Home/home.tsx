@@ -42,13 +42,13 @@ export default function Home() {
     <div id={'home'}>
       <section id={'features'}>
         <div className={'flex-container nowrap'}>
-          <SquaresFour size={'3rem'} weight={'fill'}/>
+          <SquaresFour size={'3rem'} weight={'fill'} />
           <h2>Features</h2>
         </div>
         <div className={'features-container'}>
           <div className={'feature-card'}>
             <div className={'feature-card-content'}>
-              <Waveform size={'5rem'} color={'var(--accent)'}/>
+              <Waveform size={'5rem'} color={'var(--accent)'} />
               <h3>Full support</h3>
               <p>
                 {'Kalliope still offers full support for almost every platform you can imagine.\r'}
@@ -57,7 +57,7 @@ export default function Home() {
           </div>
           <div className={'feature-card'}>
             <div className={'feature-card-content'}>
-              <Headphones size={'5rem'} color={'var(--accent)'}/>
+              <Headphones size={'5rem'} color={'var(--accent)'} />
               <h3>High quality</h3>
               <p>
                 {'Kalliope is using the well established library LavaLink for high quality playback.\r'}
@@ -66,7 +66,7 @@ export default function Home() {
           </div>
           <div className={'feature-card'}>
             <div className={'feature-card-content'}>
-              <YoutubeLogo size={'5rem'} color={'var(--accent)'}/>
+              <YoutubeLogo size={'5rem'} color={'var(--accent)'} />
               <h3>YouTube Search</h3>
               <p>
                 {'Search up to five songs from YouTube and play one directly from Discord.\r'}
@@ -75,7 +75,7 @@ export default function Home() {
           </div>
           <div className={'feature-card'}>
             <div className={'feature-card-content'}>
-              <AppWindow size={'5rem'} color={'var(--accent)'}/>
+              <AppWindow size={'5rem'} color={'var(--accent)'} />
               <h3>Dashboard</h3>
               <p>
                 {'Use the web dashboard to control your bot without having to type out commands ever again.\r'}
@@ -84,19 +84,19 @@ export default function Home() {
           </div>
           <div className={'feature-card'}>
             <div className={'feature-card-content'}>
-              <Playlist size={'5rem'} color={'var(--accent)'}/>
+              <Playlist size={'5rem'} color={'var(--accent)'} />
               <h3>Genius Lyrics</h3>
               <p>
-                Kalliope supports Genius Lyrics, directly accessible in Discord via a command.<br/>
+                Kalliope supports Genius Lyrics, directly accessible in Discord via a command.<br />
               </p>
             </div>
           </div>
           <div className={'feature-card'}>
             <div className={'feature-card-content'}>
-              <Terminal size={'5rem'} color={'var(--accent)'}/>
+              <Terminal size={'5rem'} color={'var(--accent)'} />
               <h3>Easy commands</h3>
               <p>
-                Kalliope uses slash-commands to integrate into Discord, which allows for easy command usage.<br/>
+                Kalliope uses slash-commands to integrate into Discord, which allows for easy command usage.<br />
               </p>
             </div>
           </div>
@@ -104,26 +104,26 @@ export default function Home() {
       </section>
       <section id={'install'} className={'diagonal'}>
         <div className={'flex-container nowrap'}>
-          <Download size={'3rem'} weight={'fill'}/>
+          <Download size={'3rem'} weight={'fill'} />
           <h2>Install</h2>
         </div>
         <div className={'flex-container column'}>
           <p>
             {'You\'ll need to install your own version of Kalliope in order to add it to your server.'}
-            <br/>
+            <br />
             {'But don\'t worry, it\'s really easy and fast.'}
-            <br/>
-            <br/>
+            <br />
+            <br />
           </p>
-          <a href={'https://github.com/MeridianGH/kalliope#installation'} className={'cta-button flex-container nowrap'}>
+          <a href={'https://github.com/rmckr/kalliope#installation'} className={'cta-button flex-container nowrap'}>
             Get Started
-            <ArrowSquareOut/>
+            <ArrowSquareOut />
           </a>
         </div>
       </section>
       <section id={'commands'}>
         <div className={'flex-container nowrap'}>
-          <List size={'3rem'} weight={'fill'}/>
+          <List size={'3rem'} weight={'fill'} />
           <h2>Commands</h2>
         </div>
         <div className={'commands-container'}>
@@ -131,27 +131,27 @@ export default function Home() {
             .map((command, index) => <code key={index}>{command}</code>
             )}
         </div>
-        <a href={'https://github.com/MeridianGH/kalliope#commands'} target={'_black'} className={'cta-button flex-container nowrap'}>
+        <a href={'https://github.com/rmckr/kalliope#commands'} target={'_black'} className={'cta-button flex-container nowrap'}>
           View all commands
-          <ArrowSquareOut/>
+          <ArrowSquareOut />
         </a>
       </section>
       <section id={'github'} className={'diagonal reverse'}>
         <div className={'flex-container nowrap'}>
-          <GithubLogo size={'3rem'} weight={'duotone'}/>
+          <GithubLogo size={'3rem'} weight={'duotone'} />
           <h2>GitHub</h2>
         </div>
         <div className={'flex-container column'}>
           <p>
             {'Kalliope is open-source! You can find it\'s source-code, releases and more info using the link below.'}
-            <br/>
+            <br />
             {'However, please be mindful of the license if you\'re interested in redistributing code from the repository.'}
-            <br/>
-            <br/>
+            <br />
+            <br />
           </p>
-          <a href={'https://github.com/MeridianGH/kalliope'} target={'_blank'} className={'cta-button flex-container nowrap'} rel={'noreferrer'}>
+          <a href={'https://github.com/rmckr/kalliope'} target={'_blank'} className={'cta-button flex-container nowrap'} rel={'noreferrer'}>
             GitHub
-            <ArrowSquareOut/>
+            <ArrowSquareOut />
           </a>
         </div>
       </section>

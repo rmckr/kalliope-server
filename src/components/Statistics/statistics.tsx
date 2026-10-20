@@ -41,23 +41,23 @@ export default function Statistics() {
 
   return (
     <Fragment>
-      <Navbar hideOnMobile={false}/>
+      <Navbar hideOnMobile={false} />
       <div className={'stats-background-container'}>
-        <Background/>
+        <Background />
       </div>
       <div className={'stats-container flex-container column'}>
         <div className={'stats-card flex-container column'}>
           <div className={'flex-container nowrap'}>
-            <ChartBar size={'3rem'}/>
+            <ChartBar size={'3rem'} />
             <h1>Statistics</h1>
           </div>
-          {clientDataMap === null && <div className={'flex-container column'}><Loader/></div>}
+          {clientDataMap === null && <div className={'flex-container column'}><Loader /></div>}
           {!!clientDataMap && clientData.length === 0 && (
             <p>
               This server is not managing any instance of Kalliope.
-              <br/>
+              <br />
               {'Host your own instance now using the '}
-              <a href={'https://github.com/MeridianGH/kalliope#installation'} className={'underline'}>instructions</a>
+              <a href={'https://github.com/rmckr/kalliope#installation'} className={'underline'}>instructions</a>
               {' and make sure it\'s properly configured.'}
             </p>
           )}
@@ -82,7 +82,7 @@ export default function Statistics() {
                   {'Average latency: '}
                   <span>
                     {clientData.reduce((acc, cur) => (cur.ping === -1 ? 0 : cur.ping) + acc, 0) / (clientData.filter((data) => data.ping !== -1).length || 1)}
-                    <wbr/>
+                    <wbr />
                     ms
                   </span>
                 </div>
@@ -104,29 +104,29 @@ export default function Statistics() {
               <div className={'stats-node-grid'}>
                 {Object.entries(clientDataMap ?? {}).map(([clientId, data], index) => (
                   <div className={'stats-node-container'} key={index}>
-                    <div className={`stats-node ${data.guilds.filter((guildId) => playerList?.has(guildId)).length > 0 ? 'playing' : ''}`} style={{ backgroundImage: `url(${data.displayAvatarURL})` }}/>
+                    <div className={`stats-node ${data.guilds.filter((guildId) => playerList?.has(guildId)).length > 0 ? 'playing' : ''}`} style={{ backgroundImage: `url(${data.displayAvatarURL})` }} />
                     <div className={'stats-node-tooltip'}>
                       <p>
                         {data.displayName}
-                        <br/>
+                        <br />
                         {data.version ? 'v' + data.version : 'Unknown version'}
                       </p>
                       <p>
                         {'Guilds: '}
                         {data.guilds.length}
-                        <br/>
+                        <br />
                         {'Users: '}
                         {' '}
                         {data.users}
-                        <br/>
+                        <br />
                         {'Latency: '}
                         {data.ping}
                         ms
-                        <br/>
+                        <br />
                       </p>
                       <p className={'small-text'}>
                         Ready since:
-                        <br/>
+                        <br />
                         {new Date(data.readyTimestamp).toLocaleString()}
                       </p>
                       <button onClick={(event) => {
@@ -134,7 +134,7 @@ export default function Statistics() {
                         event.currentTarget.firstElementChild!.animate([{ rotate: '0deg' }, { rotate: '360deg' }], { duration: 500, easing: 'ease-in-out' })
                       }}
                       >
-                        <ArrowsClockwise/>
+                        <ArrowsClockwise />
                       </button>
                     </div>
                   </div>

@@ -21,7 +21,7 @@ function LoadingServerIcon({ guild }: { guild?: Nullable<RESTAPIPartialCurrentUs
         onLoad={guild?.icon ? () => setLoaded(true) : undefined}
         style={{ display: isLoaded ? 'block' : 'none' }}
       />
-      {!isLoaded && <Skeleton className={'server-logo'} containerClassName={'skeleton'}/>}
+      {!isLoaded && <Skeleton className={'server-logo'} containerClassName={'skeleton'} />}
     </>
   )
 }
@@ -72,24 +72,24 @@ export default function Servers({ guildClientMap, playerList, userGuilds, guildI
     <div className={`server-container ${collapsed ? 'collapsed' : ''} flex-container column start nowrap`}>
       <div className={'server-title-container flex-container space-between nowrap'}>
         <div className={'flex-container nowrap'}>
-          <DiscordLogo/>
+          <DiscordLogo />
           <h5 className={'server-title'}>Your Servers</h5>
         </div>
-        {isMobile && <button onClick={() => setCollapsed(!collapsed)}><CaretUp style={collapsed ? { rotate: '180deg' } : undefined}/></button>}
+        {isMobile && <button onClick={() => setCollapsed(!collapsed)}><CaretUp style={collapsed ? { rotate: '180deg' } : undefined} /></button>}
       </div>
 
       {(!userGuilds || !guildClientMap) && Array.from({ length: isMobile ? 3 : 6 }).map((_, index) => (
         <div key={index} className={'server-item flex-container nowrap'}>
-          <LoadingServerIcon/>
+          <LoadingServerIcon />
           <div className={'server-item-text flex-container space-between nowrap'}>
-            <Skeleton containerClassName={'skeleton'} width={[100, 50, 200][index % 3]} style={{ maxWidth: '100%' }}/>
+            <Skeleton containerClassName={'skeleton'} width={[100, 50, 200][index % 3]} style={{ maxWidth: '100%' }} />
           </div>
         </div>
       ))}
 
       {guildClientMap && commonGuilds.length === 0 && (
         <div className={'flex-container'} style={{ width: '100%' }}>
-          <p>You have no servers in common with any instance of Kalliope.<br/>{'Host your own instance now using the '}<a href={'https://github.com/MeridianGH/kalliope#installation'} className={'underline'}>instructions</a>{' and make sure it\'s properly configured.'}</p>
+          <p>You have no servers in common with any instance of Kalliope.<br />{'Host your own instance now using the '}<a href={'https://github.com/rmckr/kalliope#installation'} className={'underline'}>instructions</a>{' and make sure it\'s properly configured.'}</p>
         </div>
       )}
 
@@ -99,10 +99,10 @@ export default function Servers({ guildClientMap, playerList, userGuilds, guildI
           className={`server-item ${guildId === guild.id ? 'active' : ''} ${playerList?.has(guild.id) ? 'playing' : ''} flex-container nowrap`}
           onClick={() => { setGuildId(guild.id) }}
         >
-          <LoadingServerIcon guild={guild}/>
+          <LoadingServerIcon guild={guild} />
           <div className={'server-item-text flex-container space-between nowrap'}>
             <span>{guild.name}</span>
-            {playerList?.has(guild.id) && <Visualizer style={'white'}/>}
+            {playerList?.has(guild.id) && <Visualizer style={'white'} />}
           </div>
         </div>
       ))}
