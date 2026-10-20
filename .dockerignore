@@ -1,0 +1,12 @@
+.git
+.github
+.husky
+.idea
+.freebuff
+.env
+.env.*
+node_modules
+dist
+server
+docs
+*.log

@@ -1,0 +1,10 @@
+services:
+  kalliope:
+    build: .
+    container_name: kalliope-server
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+    ports:
+      - "127.0.0.1:8080:8080"
