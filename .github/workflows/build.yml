@@ -1,4 +1,4 @@
-name: Webpack
+name: Build
 
 on:
   workflow_call:
@@ -14,7 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
       - name: Build
         run: |
           npm ci
-          npx webpack
+          npm run build
