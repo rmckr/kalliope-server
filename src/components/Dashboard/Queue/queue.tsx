@@ -9,7 +9,7 @@ import {
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import { Playlist } from '@phosphor-icons/react'
-import { Nullable, Track } from '../../../types/types'
+import { Nullable, Track } from '../../../../shared/types'
 import useWebSocket from '../../../hooks/webSocketHook'
 import QueueTrack from '../QueueTrack/queuetrack'
 import './queue.scss'
@@ -22,7 +22,7 @@ export type QueueProps = {
 export default function Queue({ guildId, tracks }: QueueProps) {
   const webSocket = useWebSocket()
   const [items, setItems] = useState<number[] | undefined>()
-  const timeoutId = useRef<number>()
+  const timeoutId = useRef<number | null>(null)
 
   const [prevTracks, setPrevTracks] = useState<Nullable<Track[]>>()
   if (tracks !== prevTracks) {
@@ -45,7 +45,7 @@ export default function Queue({ guildId, tracks }: QueueProps) {
       progress.classList.remove('reordering')
       if (timeoutId.current) {
         clearTimeout(timeoutId.current)
-        timeoutId.current = undefined
+        timeoutId.current = null
       }
       return
     }

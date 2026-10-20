@@ -1,7 +1,7 @@
 import React, { createRef, FormEvent, useCallback } from 'react'
 import { toast } from 'react-toastify'
 import { Equalizer, Faders, ListPlus, Trash } from '@phosphor-icons/react'
-import { Nullable, Player } from '../../../types/types'
+import { Nullable, Player } from '../../../../shared/types'
 import useWebSocket from '../../../hooks/webSocketHook'
 import './controls.scss'
 

@@ -1,12 +1,7 @@
 import express, { Request, Response } from 'express'
-import { createServer as httpServer } from 'http'
-import { createServer as httpsServer } from 'https'
-import url from 'url'
-import fs from 'fs'
-import os from 'os'
-import path from 'path'
-import fetch from 'node-fetch'
-import httpProxy from 'http-proxy'
+import { createServer } from 'node:http'
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
 import cookieParser from 'cookie-parser'
 import compression from 'compression'
 import {
@@ -16,30 +11,25 @@ import {
   RouteBases,
   Routes
 } from 'discord-api-types/v10'
-import { User, Nullable } from './src/types/types'
+import { User, Nullable } from './shared/types.js'
 import { logging } from './utilities/logging.js'
 import { findDominantColor, preventSimilarColor } from './utilities/colors.js'
 import { createWebSocketServer } from './websocketServer.js'
 import 'dotenv/config'
 
 const app = express()
-const lavalinkProxy = httpProxy.createProxyServer({ target: 'http://localhost:2333', ws: true })
 
-const production = process.argv[2] !== 'development'
-const serve = process.env.npm_lifecycle_event === 'serve'
+const isProduction = process.env.NODE_ENV === 'production'
 
-const hostname = production ? 'kalliope.cc' : 'localhost'
-const port = production ? 443 : !serve ? 80 : 8080
-const host = hostname + (port === 443 || port === 80 ? '' : ':' + port)
-const protocol = `http${production ? 's' : ''}`
-const serverOrigin = `${protocol}://${host}`
-const origin = `${protocol}://${hostname}`
+const port = Number(process.env.PORT ?? 8080)
+const origin = process.env.PUBLIC_ORIGIN ?? 'http://localhost'
+const hostname = new URL(origin).hostname
+const clientHostname = `clients.${hostname}`
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
 // Validate URLs
 app.use((req, res, next) => {
-  if (req.hostname !== hostname) { return res.status(401).end() }
   try {
     decodeURIComponent(req.path)
   } catch {
@@ -247,7 +237,7 @@ app.get('/api/user', express.json(), async (req: Request, res) => {
   }
 
   const user: User = Object.assign(userResponse, { guilds: guildsResponse })
-  if (!production) { devUserCache = user }
+  if (!isProduction) { devUserCache = user }
   res.json(user)
 })
 
@@ -263,41 +253,24 @@ app.post('/api/colors', express.json(), async (req: Request<never, { color: stri
   res.send({ color: corrected })
 })
 
-// Lavalink endpoint
-app.all('/v4/*', (req, res) => {
-  if (req.hostname !== 'lavalink.' + hostname) { return res.status(401).end() }
-  lavalinkProxy.web(req, res)
-})
-
 // Main endpoint
-app.get('*', (req, res) => {
-  if (req.hostname === 'clients.' + hostname) { return res.redirect(origin) }
-  if (req.hostname === 'lavalink.' + hostname) {
-    if (req.path !== '/version' && req.path !== '/metrics') { return res.redirect(origin) }
-    return lavalinkProxy.web(req, res, {}, console.log)
-  }
+app.get('/{*splat}', (req, res) => {
+  console.log(req.hostname, clientHostname)
+  if (req.hostname === clientHostname) { return res.redirect(origin) }
   res.sendFile(path.resolve(__dirname, '../dist/index.html'))
 })
 
-const server = production ?
-  httpsServer({
-    cert: fs.readFileSync(`${os.homedir()}/.certbot/live/${hostname}/fullchain.pem`),
-    key: fs.readFileSync(`${os.homedir()}/.certbot/live/${hostname}/privkey.pem`)
-  }, app) :
-  httpServer({}, app)
+const server = createServer(app)
 
 server.listen({ port: port }, () => {
-  logging.success(`Started server on ${serverOrigin}.`)
-  if (serve) { logging.info(`Webpack Dev Server reachable at ${origin}`) }
+  logging.success(`Started server on port ${port}.`)
 })
 
 const wsServer = createWebSocketServer(hostname)
 
 server.on('upgrade', (request, socket, head) => {
-  if (request.headers.host === 'lavalink.' + hostname) {
-    return lavalinkProxy.ws(request, socket, head)
-  }
-  if (request.headers.origin === origin || request.headers.host === 'clients.' + hostname) {
+  console.log(request.headers)
+  if (request.headers.origin === origin || request.headers.host === clientHostname) {
     return wsServer.handleUpgrade(request, socket, head, (socket) => {
       wsServer.emit('connection', socket, request)
     })

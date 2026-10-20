@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Nullable, User, UserAPIResult } from '../types/types'
+import { Nullable, User, UserAPIResult } from '../../shared/types'
 
 export const DiscordUserContext = createContext<Nullable<User>>(undefined)
 

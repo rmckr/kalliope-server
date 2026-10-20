@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nullable } from '../../../types/types'
+import { Nullable } from '../../../../shared/types'
 import imagePlaceholder from '../../../assets/image_placeholder.png'
 import './thumbnail.scss'
 

@@ -6,7 +6,7 @@ import {
   SpeakerHigh, SpeakerLow, SpeakerNone, SpeakerX
 } from '@phosphor-icons/react'
 import { useSwipeable } from 'react-swipeable'
-import { Nullable, Player, Track } from '../../../types/types'
+import { Nullable, Player, Track } from '../../../../shared/types'
 import useWebSocket from '../../../hooks/webSocketHook'
 import Thumbnail from '../Thumbnail/thumbnail'
 import LoadingButton from '../../LoadingButton/loadingbutton'

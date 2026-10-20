@@ -11,16 +11,13 @@ import Home from './components/Home/home'
 import DashboardFrame from './components/Dashboard/dashboardFrame'
 import Statistics from './components/Statistics/statistics'
 import Footer from './components/Footer/footer'
-import kalliopeTransparentPNG from './assets/kalliope_transparent.png'
 import './app.scss'
 
 const Dashboard = lazy(async () => {
-  const component = import(/* webpackChunkName: "dashboard" */ './components/Dashboard/dashboard')
+  const component = import('./components/Dashboard/dashboard')
   await new Promise((resolve) => setTimeout(resolve, 250))
   return component
 })
-
-document.querySelector<HTMLLinkElement>('link[rel=icon]')!.href = kalliopeTransparentPNG
 
 const UserWebsocketProvider = ({ children }: PropsWithChildren) => (
   <DiscordUserProvider>

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { ArrowsClockwise, ChartBar } from '@phosphor-icons/react'
-import { ClientDataMapType, MessageToUser, PlayerListType } from '../../types/types'
+import { ClientDataMapType, MessageToUser, PlayerListType } from '../../../shared/types'
 import useWebSocket from '../../hooks/webSocketHook'
 import usePageTitle from '../../hooks/pageTitleHook'
 import Navbar from '../Navbar/navbar'
@@ -19,7 +19,7 @@ export default function Statistics() {
 
     function onMessage(message: MessageEvent<string>) {
       const data = JSON.parse(message.data) as MessageToUser
-      if (!PRODUCTION) { console.log('client received:', data) }
+      if (import.meta.env.DEV) { console.log('client received:', data) }
       if (data.type === 'clientDataMap') {
         setClientDataMap(data.map)
       } else if (data.type === 'playerList') {

@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react'
 import { Id, toast } from 'react-toastify'
-import { MessageToUser, Nullable, UserMessageTypes } from '../types/types'
+import { MessageToUser, Nullable, UserMessageTypes } from '../../shared/types'
 import useDiscordLogin from '../hooks/discordLoginHook'
 
 export const WebSocketContext = createContext<Nullable<WebSocket>>(null)
@@ -12,7 +12,7 @@ export default function WebsocketProvider({ children }: PropsWithChildren) {
 
   const connectSocket = useCallback(() => {
     if (!user) { return null }
-    const ws = new WebSocket(`ws${PRODUCTION ? 's' : ''}://${location.host}${!PRODUCTION ? '/dev' : ''}`)
+    const ws = new WebSocket(`ws${import.meta.env.PROD ? 's' : ''}://${location.host}${import.meta.env.DEV ? '/dev' : ''}`)
 
     function request(data: UserMessageTypes): void
     function request(data: UserMessageTypes, awaitResponse: true): Promise<MessageToUser>
@@ -21,7 +21,7 @@ export default function WebsocketProvider({ children }: PropsWithChildren) {
       Object.assign(data, { requestId: requestId, userId: user!.id })
 
       try {
-        if (!PRODUCTION) { console.log('client sent:', data) }
+        if (import.meta.env.DEV) { console.log('client sent:', data) }
         ws.send(JSON.stringify(data))
       } catch (e) {
         throw new Error(`WebSocket request ${requestId} failed with error: ${e}`)
@@ -60,7 +60,7 @@ export default function WebsocketProvider({ children }: PropsWithChildren) {
       if (event.code === 1000) { return }
 
       connectSocket()
-      if (!reloadingToast.current) { reloadingToast.current = toast.loading('WebSocket has been closed unexpectedly. Reconnecting...') }
+      reloadingToast.current ??= toast.loading('WebSocket has been closed unexpectedly. Reconnecting...')
     })
     return ws
   }, [user])

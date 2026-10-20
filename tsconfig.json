@@ -1,14 +1,14 @@
 {
-  "include": ["./*.ts", "./utilities/*.ts"],
-  "compilerOptions": {
-    "outDir": "./server",
-    "module": "ES2022",
-    "target": "ES2022",
-    "moduleResolution": "node",
-    "typeRoots": ["./src/types"],
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "strictNullChecks": true,
-    "skipLibCheck": true
-  }
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.backend.json"
+    },
+    {
+      "path": "./tsconfig.frontend.json"
+    },
+    {
+      "path": "./tsconfig.vite.json"
+    }
+  ]
 }

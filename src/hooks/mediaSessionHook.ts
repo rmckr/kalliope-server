@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { Track } from '../types/types'
+import { Track } from '../../shared/types'
 import useWebSocket from './webSocketHook'
 import nearSilence from '../assets/near-silence.mp3'
 

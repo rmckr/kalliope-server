@@ -86,7 +86,11 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        project: '**/tsconfig.json',
+        project: [
+          './tsconfig.backend.json',
+          './tsconfig.frontend.json',
+          './tsconfig.vite.json'
+        ],
         tsconfigRootDir: import.meta.dirname,
         ecmaFeatures: { jsx: true }
       },

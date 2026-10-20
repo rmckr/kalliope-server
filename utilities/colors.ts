@@ -35,7 +35,9 @@ export function preventSimilarColor(color: string, reference: string, brighten =
 }
 
 export async function findDominantColor(url: string) {
-  const imageBuffer = Buffer.from(await fetch(url).then((response) => response.arrayBuffer()))
+  const response = await fetch(url)
+  const arrayBuffer = await response.arrayBuffer()
+  const imageBuffer = Buffer.from(arrayBuffer)
   const img = await decode(imageBuffer) as Image
   const hex = img.dominantColor(true, false)
   return `#${hex.toString(16).padStart(8, '0').substring(0, 6)}`

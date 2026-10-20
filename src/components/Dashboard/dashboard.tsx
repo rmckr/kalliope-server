@@ -11,7 +11,7 @@ import {
   SiVimeo, SiVimeoHex,
   SiYoutube, SiYoutubeHex
 } from '@icons-pack/react-simple-icons'
-import { GuildClientMapType, MessageToUser, Nullable, Player, PlayerListType } from '../../types/types'
+import { GuildClientMapType, MessageToUser, Nullable, Player, PlayerListType } from '../../../shared/types'
 import useDiscordLogin from '../../hooks/discordLoginHook'
 import useWebSocket from '../../hooks/webSocketHook'
 import useMediaSession from '../../hooks/mediaSessionHook'
@@ -46,7 +46,7 @@ export default function Dashboard() {
 
     function onMessage(message: MessageEvent<string>) {
       const data = JSON.parse(message.data) as MessageToUser
-      if (!PRODUCTION) { console.log('client received:', data) }
+      if (import.meta.env.DEV) { console.log('client received:', data) }
       switch (data.type) {
         case 'guildClientMap':
           setGuildClientMap(data.map)

@@ -1,8 +1,6 @@
-import { MessageToUser, UserMessageTypes } from './types'
+import { MessageToUser, UserMessageTypes } from '../../shared/types'
 
 declare global {
-  const PRODUCTION: boolean
-
   function request(data: UserMessageTypes): void
   function request(data: UserMessageTypes, awaitResponse: true): Promise<MessageToUser>
 

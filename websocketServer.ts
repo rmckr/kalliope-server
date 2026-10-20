@@ -11,10 +11,10 @@ import {
   PlayerListType,
   ServerMessage,
   UserMessage
-} from './src/types/types'
+} from './shared/types.js'
 import 'dotenv/config'
 
-const production = process.argv[2] !== 'development'
+const isProduction = process.env.NODE_ENV === 'production'
 
 type clientConnectionMapType = Nullable<Record<string, HeartbeatWebSocket>>
 type userConnectionByGuildMapType = Nullable<Record<string, Record<string, HeartbeatWebSocket>>>
@@ -50,7 +50,7 @@ const userConnectionsByGuildMap: NonNullable<userConnectionByGuildMapType> = {}
 const requestConnectionMap: NonNullable<requestConnectionMapType> = {}
 
 class HeartbeatWebSocket extends WebSocket {
-  isAlive: boolean
+  isAlive = false
 
   constructor(...args: unknown[]) {
     // @ts-expect-error Args are simply passed to parent overload constructors
@@ -160,7 +160,7 @@ export function createWebSocketServer(hostname: string) {
     function handleClientMessage(message: ClientMessage) {
       if (!message.clientId) { return }
 
-      // if (!production) { console.log('received from client:', data) }
+      // if (!isProduction) { console.log('received from client:', data) }
       clientConnectionMap[message.clientId] = ws
 
       switch (message.type) {
@@ -261,7 +261,7 @@ export function createWebSocketServer(hostname: string) {
       for (const guildId in userConnectionsByGuildMap) {
         const userId = Object.keys(userConnectionsByGuildMap[guildId]).find((key) => userConnectionsByGuildMap[guildId][key] === ws)
         if (userId) {
-          if (!production) { logging.info(`[WebSocket] User websocket closed with reason: ${code} | ${reason.toString() ?? 'Unknown reason'}`) }
+          if (!isProduction) { logging.info(`[WebSocket] User websocket closed with reason: ${code} | ${reason.toString() ?? 'Unknown reason'}`) }
           delete userConnectionsByGuildMap[guildId][userId]
           if (Object.keys(userConnectionsByGuildMap[guildId]).length === 0 && guildId !== 'noGuild') {
             delete userConnectionsByGuildMap[guildId]
@@ -272,7 +272,7 @@ export function createWebSocketServer(hostname: string) {
 
       const clientId = Object.keys(clientConnectionMap).find((key) => clientConnectionMap[key] === ws)
       if (clientId) {
-        if (!production) { logging.info(`[WebSocket] Client connection closed with reason: ${code} | ${reason.toString() ?? 'Unknown reason'}`) }
+        if (!isProduction) { logging.info(`[WebSocket] Client connection closed with reason: ${code} | ${reason.toString() ?? 'Unknown reason'}`) }
         delete clientConnectionMap[clientId]
         delete clientDataMap[clientId]
         Object.keys(guildClientMap).forEach((guildId) => {
