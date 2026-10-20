@@ -10,6 +10,10 @@ export default function WebsocketProvider({ children }: PropsWithChildren) {
   const reloadingToast = useRef<Nullable<Id>>(null)
   const user = useDiscordLogin()
 
+  // Holds the latest connectSocket so the close handler (defined inside
+  // connectSocket itself) can trigger a reconnect without self-reference
+  const connectSocketRef = useRef<Nullable<() => Nullable<WebSocket>>>(null)
+
   const connectSocket = useCallback(() => {
     if (!user) { return null }
     const ws = new WebSocket(`ws${import.meta.env.PROD ? 's' : ''}://${location.host}${import.meta.env.DEV ? '/dev' : ''}`)
@@ -24,7 +28,7 @@ export default function WebsocketProvider({ children }: PropsWithChildren) {
         if (import.meta.env.DEV) { console.log('client sent:', data) }
         ws.send(JSON.stringify(data))
       } catch (e) {
-        throw new Error(`WebSocket request ${requestId} failed with error: ${e}`)
+        throw new Error(`WebSocket request ${requestId} failed with error: ${e instanceof Error ? e.message : String(e)}`)
       }
       if (!awaitResponse) { return }
 
@@ -59,13 +63,14 @@ export default function WebsocketProvider({ children }: PropsWithChildren) {
       setWebSocket(null)
       if (event.code === 1000) { return }
 
-      connectSocket()
+      connectSocketRef.current?.()
       reloadingToast.current ??= toast.loading('WebSocket has been closed unexpectedly. Reconnecting...')
     })
     return ws
   }, [user])
 
   useEffect(() => {
+    connectSocketRef.current = connectSocket
     const ws = connectSocket()
     if (!ws) {
       return () => {
